@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'LVColorWellCell' target in the 'LVColorWellCell' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
