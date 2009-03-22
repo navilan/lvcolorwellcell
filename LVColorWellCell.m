@@ -46,19 +46,19 @@
 	if (sender == nil || [sender clickedRow] == -1){
 		return [self objectValue];
 	}
-	clickedTableView = sender;
-	if ([self delegate] && [[self delegate] respondsToSelector:@selector(colorCell:color:)]){
-		return [delegate colorCell:self colorForTableView:sender];
+	colorRow = [sender clickedRow];
+	if ([self delegate] && [[self delegate] respondsToSelector:@selector(colorCell:colorForRow:)]){
+		return [delegate colorCell:self colorForRow:colorRow];
 	}
-	clickedColorObject = [[[sender dataSource] arrangedObjects] objectAtIndex:[sender clickedRow]];
-	return [clickedColorObject valueForKey:[self colorKey]];
+	colorObject = [[[sender dataSource] arrangedObjects] objectAtIndex:[sender clickedRow]];
+	return [colorObject valueForKey:[self colorKey]];
 }
 
 -(void)setColor:(NSColor *) color{
-	if ([self delegate] && [[self delegate] respondsToSelector:@selector(colorCell:tableView:setColor:)]){
-		return [delegate colorCell:self tableView:clickedTableView setColor:color];
+	if ([self delegate] && [[self delegate] respondsToSelector:@selector(colorCell:setColor:forRow:)]){
+		return [delegate colorCell:self setColor:color forRow:colorRow];
 	}
-	[clickedColorObject setValue:color forKey:[self colorKey]];
+	[colorObject setValue:color forKey:[self colorKey]];
 }
 	
 -(void)showPicker:(id)sender{

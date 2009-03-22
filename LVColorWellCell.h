@@ -13,21 +13,21 @@
 	@private
 	id delegate;
 	NSString * colorKey;
-	id clickedColorObject;	
-	id clickedTableView;	
+	id colorObject;	
+	int colorRow;	
 }
 
 @property (readwrite, copy) NSString * colorKey;
-IBOutlet @property (readwrite, copy) id delegate;
+IBOutlet @property (readwrite, assign) id delegate;
 
 @end
 
 @protocol LVColorWellCellDelegate
 -(void)colorCell:(LVColorWellCell *)colorCell 	
-	   tableView:(NSTableView *)tableView
-		setColor:(NSColor *)color;
+			setColor:(NSColor *)color 
+			forRow:(int)row;
 
 -(NSColor *)colorCell:(LVColorWellCell *)colorCell 	
-	colorForTableView:(NSTableView *)tableView;
+			colorForRow:(int)row;
 
 @end

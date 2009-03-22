@@ -9,6 +9,12 @@
 #import "ColorsController.h"
 #import "LVColorWellCell.h"
 
+@interface ColorsController()
+
+-(LVColorWellCell *)colorCell;
+
+@end
+
 @implementation ColorsController
 
 @synthesize inner, outer;
@@ -35,6 +41,15 @@
 
 }
 
+-(LVColorWellCell *)colorCell{
+	NSUInteger index = [colorTable columnWithIdentifier:@"color"];
+	if (index >= 0){
+		NSTableColumn * colorColumn = [[colorTable tableColumns] objectAtIndex:index];
+		return [colorColumn dataCell];
+	}
+	return nil;
+}
+
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     if (object == innerObject) {
 		[self setInner:[innerObject color]];		
@@ -45,6 +60,37 @@
 	else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
+}
+
+-(BOOL)useDelegate{
+	return useDelegate;
+}
+
+-(void)setUseDelegate:(BOOL)mustUsedelegate{
+	useDelegate = mustUsedelegate;
+	[[self colorCell] setDelegate:useDelegate? self : nil];
+}
+
+-(void)colorCell:(LVColorWellCell *)colorCell 	
+		setColor:(NSColor *)color
+		forRow:(int)row{
+	NSLog(@"Using Delegate::Set Color For Row:%d", row);
+	if (row == 0){
+		[innerObject setColor:color];
+	} else if (row == 1){
+		[outerObject setColor:color];
+	}
+}
+
+-(NSColor *)colorCell:(LVColorWellCell *)colorCell 	
+	colorForRow:(int)row{
+	NSLog(@"Using Delegate::Get Color For Row:%d", row);
+	if (row == 0){
+		return [innerObject color];
+	} else if (row == 1){
+		return [outerObject color];
+	}
+	return nil;
 }
 
 @end

@@ -18,9 +18,11 @@
 	Colors * outerObject;
 	NSColor * inner;
 	NSColor * outer;
+	BOOL useDelegate;
 }
 
 @property  (retain) NSColor * inner;
 @property  (retain) NSColor * outer;
+@property  BOOL useDelegate;
 
 @end
